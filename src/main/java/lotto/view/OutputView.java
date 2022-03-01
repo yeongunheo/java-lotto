@@ -3,6 +3,7 @@ package lotto.view;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lotto.domain.Lotto;
 import lotto.domain.Lottos;
 import lotto.domain.Rank;
@@ -46,7 +47,10 @@ public class OutputView {
         System.out.println();
         System.out.println(EXPLAIN_WINNING_STATISTICS);
         System.out.println(BASIC_LINE);
-        List<Rank> ranks = Arrays.asList(Rank.values()).subList(0, Rank.values().length - 1);
+        List<Rank> ranks = Arrays.asList(Rank.values())
+                .stream()
+                .filter(rank -> rank != Rank.NO_MATCH)
+                .collect(Collectors.toList());
         Collections.reverse(ranks);
         ranks.stream()
                 .forEach(rank -> printRankResult(rank, reuslt.getRankCount(rank)));
